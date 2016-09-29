@@ -1,0 +1,30 @@
+{
+  "name": "son-of-gifv",
+  "version": "1.0.0",
+  "description": "WordPress plugin, GIF to GIFV converter",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petenelson/son-of-gifv.git"
+  },
+  "author": "Pete Nelson",
+  "license": "GPLv2 or later",
+  "main": "Gruntfile.js",
+  "bugs": {
+    "url": "https://github.com/petenelson/son-of-gifv/issues"
+  },
+  "homepage": "https://github.com/petenelson/son-of-gifv",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-insert": "^0.1.0",
+    "grunt-phplint": "0.0.8",
+    "grunt-potomo": "^3.4.0",
+    "grunt-wp-i18n": "^0.5.4",
+    "grunt-wp-readme-to-markdown": "~0.9.0",
+    "phplint": "^1.7.1"
+  }
+}

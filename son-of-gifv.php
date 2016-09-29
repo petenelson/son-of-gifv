@@ -8,26 +8,36 @@
  *
  */
 
-function son_of_gifv_imgr_upload() {
 
-	$local_file = dirname( __FILE__ ). '/giddy.gif'; //path to a local file on your server
-
-	$encoded_file = base64_encode(file_get_contents($local_file));
-
-
-	$post_fields = array (
-
-	);
-
-	$response = wp_remote_post( 'https://api.imgur.com/3/image',
-	 array(
-	 	'headers'    => array( 'Authorization' => 'Client-ID d36e23f2ed35b96' ),
-		'body'       => array( 'image' => $encoded_file ),
-	 )
-	);
-
-	var_dump( $response );
-
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'restricted access' );
 }
 
-WP_CLI::add_command( 'gifv upload', 'son_of_gifv_imgr_upload' );
+if ( ! defined( 'SON_OF_GIFV_ROOT' ) ) {
+	define( 'SON_OF_GIFV_ROOT', trailingslashit( dirname( __FILE__ ) ) );
+}
+
+if ( ! defined( 'SON_OF_GIFV_PATH' ) ) {
+	define( 'SON_OF_GIFV_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+}
+
+// Load plugin files.
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-common.php';
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-permalinks.php';
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-template.php';
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-attachment.php';
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-converter.php';
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-rest-api.php';
+
+// Load CLI commands
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-cli.php';
+}
+
+// Initialize plugin code.
+Son_of_GIFV_Common::setup();
+Son_of_GIFV_Permalinks::setup();
+Son_of_GIFV_Template::setup();
+Son_of_GIFV_Attachment::setup();
+Son_of_GIFV_REST_API::setup();
+Son_of_GIFV_Converter::setup();
