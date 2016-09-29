@@ -13,18 +13,6 @@ if ( ! class_exists( 'Son_of_GIFV_Common' ) ) {
 
 		}
 
-		static public function has_gifv( $attachment_id ) {
-			// TODO
-		}
-
-		static public function is_gif( $attachment_id ) {
-			// TODO
-		}
-
-		static public function is_animated_gif( $attachment_id ) {
-			// TODO
-		}
-
 	}
 
 }
