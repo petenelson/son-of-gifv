@@ -110,7 +110,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			}
 
 			// Excellent, let's store the results so far to the attachment
-			// so we have it for future reference.
+			// so we have it for future reference in case we need it.
 			self::store_convert_results( $attachment_id, $results );
 
 			// Download the MP4.
@@ -127,7 +127,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			// Download the thumbnail.
 			$results = self::download_thumbnail( $results );
 
-			// Store the IDs separately.
+			// Store the IDs separately for easier lookup.
 			if ( ! empty( $results['mp4_attachment_id'] ) ) {
 				update_post_meta( $attachment_id, 'son_of_gifv_mp4_id', $results['mp4_attachment_id'] );
 			}
@@ -143,6 +143,12 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 
 		}
 
+		/**
+		 * Downloads an MP4 locally and sideloads it into the media library
+		 *
+		 * @param  array $results The results array from gif_to_gifv().
+		 * @return array          Updated results array.
+		 */
 		static public function download_mp4( $results ) {
 
 			if ( ! empty( $results['imgur_response']->data ) && ! empty( $results['imgur_response']->data->mp4 ) ) {
@@ -175,6 +181,12 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			return $results;
 		}
 
+		/**
+		 * Downloads a thumbnail locally and sideloads it into the media library
+		 *
+		 * @param  array $results The results array from gif_to_gifv().
+		 * @return array          Updated results array.
+		 */
 		static public function download_thumbnail( $results ) {
 
 			if ( ! empty( $results['imgur_response']->data ) && ! empty( $results['imgur_response']->data->id ) ) {
@@ -209,6 +221,13 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			return $results;
 		}
 
+		/**
+		 * Stores the conversion results to the attachment meta.
+		 *
+		 * @param  int   $attachment_id The attachment ID.
+		 * @param  array $results       The conversion results.
+		 * @return void
+		 */
 		static public function store_convert_results( $attachment_id, $results ) {
 			update_post_meta( $attachment_id, 'son_of_gifv_convert_results', $results );			
 		}
