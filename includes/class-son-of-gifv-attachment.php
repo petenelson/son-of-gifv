@@ -5,13 +5,59 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 	class Son_of_GIFV_Attachment {
 
 		static public function setup() {
-
-			// TODO add actions and filters
-
+			add_action( 'pre_get_posts', 'Son_of_GIFV_Attachment::update_main_query' );
 		}
 
+		static public function update_main_query( $query ) {
+			if ( $query->is_main_query() && '1' === $query->get( '_son_of_gifv' ) ) {
+				$attachment_name = $query->get( 'son_of_gifv_name' );
+
+				$args = array(
+					'posts_per_page'   => 1,
+					'post_type'        => 'attachment',
+					'post_status'      => 'inherit',
+					'post_mime_type'   => 'image/gif',
+					'name'             => $attachment_name,
+					'meta_query'       => array(
+						array(
+							'key'     => 'son_of_gifv_mp4_id',
+							'type'    => 'numeric',
+							'compare' => '>',
+							'value'   => 0,
+							),
+						array(
+							'key'     => 'son_of_gifv_thumbnail_id',
+							'type'    => 'numeric',
+							'compare' => '>',
+							'value'   => 0,
+							)
+						),
+					);
+
+
+				$query->parse_query( $args );
+				$query->set( '_son_of_gifv', '1' );
+
+			}
+		}
+
+		/**
+		 * Returns true if the attacment ID as a corresponding MP4 and
+		 * thumbnail attachment.
+		 *
+		 * @param  int  $attachment_id The attachment ID.
+		 * @return boolean
+		 */
 		static public function has_gifv( $attachment_id ) {
-			// TODO
+			$mp4_id        = get_post_meta( $attachment_id, 'son_of_gifv_mp4_id', true );
+			$thumbnail_id  = get_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', true );
+			if ( ! empty( $mp4_id ) && ! empty( $thumbnail_id ) ) {
+
+				return
+					'video/mp4'  === get_post_field( 'post_mime_type', $mp4_id ) &&
+					'image/jpeg' === get_post_field( 'post_mime_type', $thumbnail_id);
+
+			}
 		}
 
 		static public function is_gif( $attachment_id ) {
