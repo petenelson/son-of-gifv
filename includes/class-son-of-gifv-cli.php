@@ -21,10 +21,10 @@ if ( ! class_exists( 'Son_of_GIFV_CLI' ) ) {
 
 			$results = Son_of_GIFV_Converter::gif_to_gifv( $args[0] );
 
-			var_dump( $results );
-
 			if ( ! empty( $results['error'] ) ) {
 				WP_CLI::Error( $results['error'] );
+			} else {
+				WP_CLI::Success( 'GIFV created for ID %d', $results['attachment_id'] );
 			}
 
 		}
