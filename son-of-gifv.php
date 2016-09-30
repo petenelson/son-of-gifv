@@ -28,6 +28,7 @@ require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-template.php';
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-attachment.php';
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-converter.php';
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-rest-api.php';
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-imgur.php';
 
 // Load CLI commands
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
