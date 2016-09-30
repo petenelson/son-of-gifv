@@ -29,6 +29,10 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			);
 		}
 
+		static public function has_gifv( $attachment_id ) {
+			
+		}
+
 		/**
 		 * Creates a GIFV attachment for an animated GIF.
 		 *
@@ -90,8 +94,37 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			// so we have it for future reference.
 			self::store_convert_results( $attachment_id, $results );
 
-			// download MP4
+			// Download the MP4.
+			$results = self::download_mp4( $results );
 
+			// Store the current results of the conversion.
+			self::store_convert_results( $attachment_id, $results );
+
+			// Break out of here if we don't have the MP4.
+			if ( ! empty( $results['error'] ) ) {
+				return $results;
+			}
+
+			// Download the thumbnail.
+			$results = self::download_thumbnail( $results );
+
+			// Store the IDs separately.
+			if ( ! empty( $results['mp4_attachment_id'] ) ) {
+				update_post_meta( $attachment_id, 'son_of_gifv_mp4_id', $results['mp4_attachment_id'] );
+			}
+
+			if ( ! empty( $results['thumbnail_attachment_id'] ) ) {
+				update_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', $results['thumbnail_attachment_id'] );
+			}
+
+			// Store the final results of the conversion.
+			self::store_convert_results( $attachment_id, $results );
+
+			return $results;
+
+		}
+
+		static public function download_mp4( $results ) {
 
 			if ( ! empty( $results['imgur_response']->data ) && ! empty( $results['imgur_response']->data->mp4 ) ) {
 
@@ -120,16 +153,11 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 
 			}
 
-			// Store the current results of the conversion.
-			self::store_convert_results( $attachment_id, $results );
+			return $results;
+		}
 
-			// Break out of here if we don't have the MP4.
-			if ( ! empty( $results['error'] ) ) {
-				return $results;
-			}
+		static public function download_thumbnail( $results ) {
 
-
-			// Download the thumbnail.
 			if ( ! empty( $results['imgur_response']->data ) && ! empty( $results['imgur_response']->data->id ) ) {
 
 				// It looks like the thumbnail is the ID plus 'h.jpg' at the end.
@@ -159,20 +187,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 				}
 			}
 
-			// Store the IDs separately.
-			if ( ! empty( $results['mp4_attachment_id'] ) ) {
-				update_post_meta( $attachment_id, 'son_of_gifv_mp4_id', $results['mp4_attachment_id'] );
-			}
-
-			if ( ! empty( $results['thumbnail_attachment_id'] ) ) {
-				update_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', $results['thumbnail_attachment_id'] );
-			}
-
-			// Store the final results of the conversion.
-			self::store_convert_results( $attachment_id, $results );
-
 			return $results;
-
 		}
 
 		static public function store_convert_results( $attachment_id, $results ) {
