@@ -164,6 +164,13 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 			return $temp_file;
 		}
 
+		static public function gifv_url( $attachment_id ) {
+			if ( self::has_gifv( $attachment_id ) ) {
+				$attachment = get_post( $attachment_id );
+				return site_url( $attachment->post_name . '.gifv' );
+			}
+		}
+
 
 	}
 

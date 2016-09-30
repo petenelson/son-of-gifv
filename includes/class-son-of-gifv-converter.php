@@ -25,6 +25,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 				'imgur_response'           => false,
 				'mp4_attachment_id'        => 0,
 				'thumbnail_attachment_id'  => 0,
+				'gifv_url'                 => '',
 				'error'                    => '',
 			);
 		}
@@ -116,6 +117,9 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			if ( ! empty( $results['thumbnail_attachment_id'] ) ) {
 				update_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', $results['thumbnail_attachment_id'] );
 			}
+
+			// Get the new URL
+			$results['gifv_url'] = Son_of_GIFV_Attachment::gifv_url( $attachment_id );
 
 			// Store the final results of the conversion.
 			self::store_convert_results( $attachment_id, $results );
