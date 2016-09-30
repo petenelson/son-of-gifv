@@ -29,8 +29,23 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			);
 		}
 
+		/**
+		 * Returns true if the attacment ID as a corresponding MP4 and
+		 * thumbnail attachment.
+		 *
+		 * @param  int  $attachment_id The attachment ID.
+		 * @return boolean
+		 */
 		static public function has_gifv( $attachment_id ) {
-			
+			$mp4_id        = get_post_meta( $attachment_id, 'son_of_gifv_mp4_id', true );
+			$thumbnail_id  = get_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', true );
+			if ( ! empty( $mp4_id ) && ! empty( $thumbnail_id ) ) {
+
+				return
+					'video/mp4'  === get_post_field( 'post_mime_type', $mp4_id ) &&
+					'image/jpeg' === get_post_field( 'post_mime_type', $thumbnail_id);
+
+			}
 		}
 
 		/**
@@ -40,8 +55,6 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 		 * @return array              Results of the conversion process.
 		 */
 		static public function gif_to_gifv( $attachment_id ) {
-			// TODO
-			// does it already have a GIFV?
 
 			// Setup default results.
 			$results = self::get_default_results();
@@ -59,6 +72,12 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 
 			if ( 'attachment' !== $post->post_type ) {
 				$results['error'] = sprintf( __( 'ID %d is not an attachment', 'son-of-gifv' ), $attachment_id );
+				return $results;
+			}
+
+			// Does it already have files for a GIFV?
+			if ( self::has_gifv( $attachment_id ) ) {
+				$results['error'] = sprintf( __( 'Attachment ID %d already has a GIFV', 'son-of-gifv' ), $attachment_id );
 				return $results;
 			}
 
