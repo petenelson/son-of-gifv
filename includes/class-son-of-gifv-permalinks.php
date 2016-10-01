@@ -11,9 +11,12 @@ if ( ! class_exists( 'Son_of_GIFV_Permalinks' ) ) {
 		 */
 		static public function setup() {
 
-			add_action( 'init',                    'Son_of_GIFV_Permalinks::register_rewrite_rules' );
-			add_filter( 'query_vars',              'Son_of_GIFV_Permalinks::add_query_vars' );
-			add_filter( 'user_trailingslashit',    'Son_of_GIFV_Permalinks::user_trailingslashit', 10 , 2 );
+			add_action( 'init',                            'Son_of_GIFV_Permalinks::register_rewrite_rules' );
+			add_filter( 'query_vars',                      'Son_of_GIFV_Permalinks::add_query_vars' );
+			add_filter( 'user_trailingslashit',            'Son_of_GIFV_Permalinks::user_trailingslashit', 10 , 2 );
+
+			// Triggered when the plugin has been upgraded.
+			add_action( 'son-of-gifv-plugin-upgrade',      'Son_of_GIFV_Permalinks::flush_rewrite_rules' );
 
 		}
 
@@ -37,6 +40,15 @@ if ( ! class_exists( 'Son_of_GIFV_Permalinks' ) ) {
 			$query_vars[] = 'son_of_gifv_name';
 			$query_vars[] = '_son_of_gifv';
 			return $query_vars;
+		}
+
+		/**
+		 * Flush the rewrite rules (when the plugin has been installed or upgraded).
+		 *
+		 * @return void
+		 */
+		static public function flush_rewrite_rules() {
+			flush_rewrite_rules();
 		}
 
 		/**

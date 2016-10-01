@@ -21,7 +21,16 @@
 			parent.find( '.please-wait' ).removeClass( 'hidden' );
 
 			// Convert this to GIFV.
-			$.post( Son_of_GIFV_Admin.rest_api_url.convert, { attachment_id:link.data( 'id' ) }, function( results ) {
+			$.ajax( {
+				url: Son_of_GIFV_Admin.rest_api_url.convert,
+				method: 'POST',
+				beforeSend: function ( xhr ) {
+					xhr.setRequestHeader( 'X-WP-Nonce', wpApiSettings.nonce );
+				},
+				data: {
+					attachment_id:link.data( 'id' )
+				}
+			} ).done ( function( results ) {
 
 				// Turn off the spinner
 				parent.find( '.spinner' ).removeClass( 'is-active' );

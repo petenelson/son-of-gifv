@@ -10,7 +10,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 		 * @return array
 		 */
 		static public function get_default_results() {
-			return apply_filters( 'son-of-gifv-default-results' array(
+			return apply_filters( 'son-of-gifv-default-results', array(
 				'attachment_id'            => 0,
 				'is_gif'                   => false,
 				'is_animated_gif'          => false,

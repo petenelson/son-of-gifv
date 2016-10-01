@@ -27,6 +27,7 @@ if ( ! defined( 'SON_OF_GIFV_URL_ROOT' ) ) {
 
 // Load plugin files.
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-common.php';
+require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-admin.php';
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-permalinks.php';
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-template.php';
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-attachment.php';
@@ -40,9 +41,8 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 }
 
 // Initialize plugin code.
-Son_of_GIFV_Common::setup();
+Son_of_GIFV_Admin::setup();
 Son_of_GIFV_Permalinks::setup();
 Son_of_GIFV_Template::setup();
 Son_of_GIFV_Attachment::setup();
 Son_of_GIFV_REST_API::setup();
-
