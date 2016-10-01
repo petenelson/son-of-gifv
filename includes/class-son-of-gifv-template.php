@@ -9,7 +9,7 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 		}
 
 		/**
-		 * Load thge GIFV template for GIFV links.
+		 * Load the GIFV template for GIFV links.
 		 *
 		 * @param  string $template The original template.
 		 * @return string           Updated template.
@@ -34,6 +34,7 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 			$attachment = get_post( $attachment_id );
 			if ( ! empty( $attachment ) ) {
 
+				// Build the data array to be used by the frontend templates.
 				$data = array(
 					'id'                 => $attachment_id,
 					'mp4_id'             => get_post_meta( $attachment_id, 'son_of_gifv_mp4_id', true ),
@@ -48,14 +49,18 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 					'domain'             => str_replace( 'http://', '', str_replace( 'https://', '', get_site_url() ) ),
 				);
 
+				// Get the URL for the MP4.
 				if ( ! empty( $data['mp4_id'] ) ) {
 					$data['mp4_url'] = wp_get_attachment_url( $data['mp4_id'] );
 				}
 
+				// Get the URL for the thumbnail.  This is primarily used in the
+				// meta tags for Twitter cards and opengraph.
 				if ( ! empty( $data['thumbnail_id'] ) ) {
 					$data['thumbnail_url'] = wp_get_attachment_url( $data['thumbnail_id'] );
 				}
 
+				// Get the height and width of the GIF, used in the MP4 video tag.
 				$metadata = wp_get_attachment_metadata( $attachment_id );
 				if ( ! empty( $metadata ) ) {
 					$data['attachment_width']  = $metadata['width'];
@@ -69,6 +74,11 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 
 		}
 
+		/**
+		 * Gets the list of templates used in the GIFV template head section.
+		 *
+		 * @return array
+		 */
 		static public function get_head_templates() {
 
 			$templates = array(

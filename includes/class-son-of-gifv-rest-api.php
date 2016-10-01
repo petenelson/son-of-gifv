@@ -19,17 +19,26 @@ if ( ! class_exists( 'Son_of_GIFV_REST_API' ) ) {
 				'v1/convert',
 				array(
 					'callback'              => 'Son_of_GIFV_REST_API::convert_gif_to_gifv',
-					'permission_callback'   => 'is_user_logged_in',
+					'permission_callback'   => 'Son_of_GIFV_REST_API::user_can_upload_files',
 					'methods'  => array( 'GET', 'POST' ),
 					'args'     => array(
 						'attachment_id' => array(
-							'required' => false,
-
+							'required'            => true,
+							'sanitize_callback'   => 'absint',
 							)
 						),
 
 					)
 			);
+		}
+
+		/**
+		 * Permissions callback for the convert endpoint.
+		 *
+		 * @return boolean
+		 */
+		static public function user_can_upload_files() {
+			return current_user_can( 'upload_files' );
 		}
 
 		/**

@@ -7,7 +7,7 @@ module.exports = function( grunt ) {
 			target: {
 				options: {
 					type:        'wp-plugin',
-					mainFile:    'dashboard-directory-size.php'
+					mainFile:    'son-of-gifv.php'
 				}
 			}
 		},
@@ -34,7 +34,7 @@ module.exports = function( grunt ) {
 
 		wp_readme_to_markdown: {
 			options: {
-				screenshot_url: "https://raw.githubusercontent.com/petenelson/dashboard-directory-size/master/assets/{screenshot}.png",
+				screenshot_url: "https://raw.githubusercontent.com/petenelson/son-of-gifv/master/assets/{screenshot}.png",
 				},
 			your_target: {
 				files: {
@@ -82,10 +82,10 @@ module.exports = function( grunt ) {
 				files: [
 
 					// directories
-					{ expand: true, src: ['admin/**'], dest: 'release/dashboard-directory-size' },
-					{ expand: true, src: ['includes/**'], dest: 'release/dashboard-directory-size' },
-					{ expand: true, src: ['languages/*.pot'], dest: 'release/dashboard-directory-size' },
-					{ expand: true, src: ['languages/*.mo'], dest: 'release/dashboard-directory-size' },
+					{ expand: true, src: ['admin/**'], dest: 'release/son-of-gifv' },
+					{ expand: true, src: ['includes/**'], dest: 'release/son-of-gifv' },
+					{ expand: true, src: ['languages/*.pot'], dest: 'release/son-of-gifv' },
+					{ expand: true, src: ['languages/*.mo'], dest: 'release/son-of-gifv' },
 
 					// root dir files
 					{
@@ -94,7 +94,7 @@ module.exports = function( grunt ) {
 							'*.php',
 							'readme.txt',
 							],
-						dest: 'release/dashboard-directory-size'
+						dest: 'release/son-of-gifv'
 					}
 
 				]
@@ -125,7 +125,7 @@ module.exports = function( grunt ) {
 
 	grunt.registerTask( 'test', [ 'phplint', 'phpunit' ] );
 
-	grunt.registerTask( 'readme', ['wp_readme_to_markdown', 'insert:badges'] );
+	grunt.registerTask( 'readme', ['wp_readme_to_markdown' ] );
 
 	// create release for WordPress repository
 	grunt.registerTask( 'wp', [ 'clean', 'copy' ] );
