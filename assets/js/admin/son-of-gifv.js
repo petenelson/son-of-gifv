@@ -3,10 +3,6 @@
 	var Son_of_GIFV = {
 
 		init: function() {
-			this.bindEvents();
-		},
-
-		bindEvents: function() {
 			var fields = $( '.son-of-gifv-form-fields' );
 			if ( fields.length === 0 ) {
 				return;
@@ -20,24 +16,33 @@
 
 			// Turn on the spinner and hide this link.
 			var link = $( e.target );
-			link.addClass( 'hidden' ).parent().find( '.spinner' ).addClass( 'is-active' );
+			var parent = link.addClass( 'hidden' ).parent();
 
+			parent.find( '.spinner' ).addClass( 'is-active' );
+
+			// Show the please wait message.
+			parent.find( '.please-wait' ).removeClass( 'hidden' );
 
 			// Convert this to GIFV.
 			$.post( Son_of_GIFV_Admin.rest_api_url.convert, { attachment_id:link.data( 'id' ) }, function( results ) {
 
-				if ( '' === results['error'] && '' !== results['html'] ) {
+				// Turn off the spinner
+				parent.find( '.spinner' ).removeClass( 'is-active' );
+
+				if ( '' !== results['error'] ) {
+					// Show the error message if there is one.
+					parent.find( '.error-message' ).removeClass( 'hidden' ).text( results['error'] );
+					parent.find( '.please-wait' ).addClass( 'hidden' );
+				} else if ( '' !== results['html'] ) {
+					// Replace this with the successful HTML template
 					link.parent().replaceWith( results['html'] );
 				}
 
 			} );
-
 		}
 
 	};
 
-	$( document ).ready( function () {
-		Son_of_GIFV.init();	
-	})
+	Son_of_GIFV.init();
 
 } ) ( jQuery );

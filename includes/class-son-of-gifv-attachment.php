@@ -131,6 +131,7 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 
 		/**
 		 * Downloads a URL to a local file.
+		 *
 		 * @param  string $url            The URL to the file.
 		 * @param  string $local_filename The requested local file name.
 		 * @return string                 The full local path to the downloaded file.
@@ -138,7 +139,7 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 		static public function download_file( $url, $local_filename ) {
 
 			// Download the file.
-			$response = wp_remote_get( $url );
+			$response = wp_remote_get( $url, array( 'timeout' => 15 ) );
 
 			if ( ! is_wp_error( $response ) ) {
 				// Get the file contents.
@@ -148,6 +149,8 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 				$temp_file = self::binary_data_to_file( $contents, trailingslashit( wp_upload_dir()['basedir'] ), $local_filename );
 
 				return $temp_file;
+			} else {
+				return $response;
 			}
 		}
 

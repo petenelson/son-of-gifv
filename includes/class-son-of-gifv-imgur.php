@@ -14,8 +14,6 @@ if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 				return false;
 			}
 
-			// TODO 
-
 			// Get the file contents and encode them.
 			$encoded_file = base64_encode( file_get_contents( $filename ) );
 
@@ -23,8 +21,10 @@ if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 			$url       = apply_filters( 'son-of-gifv-imgur-api-url', 'https://api.imgur.com/3/image' );
 			$client_id = apply_filters( 'son-of-gifv-imgur-client-id', 'd36e23f2ed35b96' );
 
+			// POST the file to the Imgur API.
 			$response = wp_remote_post( $url,
 			 array(
+			 	'timeout'    => 15,
 				'headers'    => array( 'Authorization' => 'Client-ID ' . $client_id ),
 				'body'       => array( 'image' => $encoded_file ),
 				)

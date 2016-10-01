@@ -90,7 +90,8 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 
 			// Check if the upload worked.
 			if ( is_wp_error( $imgur_response ) ) {
-				$results['error']    = __( 'Unable to upload image to Imgur', 'son-of-gifv' );
+				$results['error']    = __( 'Unable to upload image to Imgur.', 'son-of-gifv' );
+				$results['error']   .= ' ' . $imgur_response->get_error_message();
 				$results['wp_error'] = $imgur_response;
 				return $results;
 			} else {
@@ -150,7 +151,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 				// Download the URL locally.
 				$local_mp4 = Son_of_GIFV_Attachment::download_file( $results['imgur_response']->data->mp4, $local_mp4_filename );
 
-				if ( ! empty( $local_mp4 ) ) {
+				if ( ! is_wp_error( $local_mp4 ) ) {
 
 					// Sideload the MP4 into the media library.
 					$title = sprintf( __( 'MP4 for %s', 'son-of-gifv' ), basename( $results['filename'] ) );
@@ -164,7 +165,8 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 					}
 
 				} else {
-					$results['error'] = sprintf( __( 'Unable to download MP4 %s', 'son-of-gifv' ), $results['imgur_response']->data->mp4 );
+					$results['error'] = sprintf( __( 'Unable to download MP4 %s.', 'son-of-gifv' ), $results['imgur_response']->data->mp4 );
+					$results['error'] .= ' ' . $local_mp4->get_error_message();
 				}
 
 			}
@@ -191,7 +193,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 				// Download the thumbnail locally.
 				$local_thumbnail = Son_of_GIFV_Attachment::download_file( $thumbnail_url, basename( $results['filename'] ) . '.jpg' );
 
-				if ( ! empty( $local_thumbnail ) ) {
+				if ( ! is_wp_error( $local_thumbnail ) ) {
 
 					// Sideload the thumbnail into the media library.
 					$title = sprintf( __( 'Thumbnail for %s', 'son-of-gifv' ), basename( $results['filename'] ) );
@@ -205,7 +207,8 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 					}
 
 				} else {
-					$results['error'] = sprintf( __( 'Unable to download thumbnail %s', 'son-of-gifv' ), $thumbnail_url );
+					$results['error'] = sprintf( __( 'Unable to download thumbnail %s.', 'son-of-gifv' ), $thumbnail_url );
+					$results['error'] .= ' ' . $local_thumbnail->get_error_message();
 				}
 			}
 
