@@ -1,8 +1,8 @@
 <?php
 // TODO
+// <meta name="twitter:site"                       content="@gungeekatx" />
 
 ?>
-<meta name="twitter:site"                       content="@gungeekatx" />
 <meta name="twitter:card"                       content="player" />
 <meta name="twitter:domain"                     content="<?php echo esc_attr( $gifv_data['domain'] ); ?>" />
 <meta name="twitter:url"                        content="<?php echo esc_attr( $gifv_data['permalink'] ); ?>" />

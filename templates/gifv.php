@@ -28,7 +28,6 @@
 
 	</head>
 	<body class="son-of-gifv-body">
-
 		<?php do_action( 'son-of-gifv-template-body', $gifv_data ); ?>
 
 		<style>
