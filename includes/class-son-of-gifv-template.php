@@ -31,35 +31,41 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 		 */
 		static public function get_template_data( $attachment_id ) {
 
-			$data = array(
-				'id'                 => $attachment_id,
-				'mp4_id'             => get_post_meta( $attachment_id, 'son_of_gifv_mp4_id', true ),
-				'thumbnail_id'       => get_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', true ),
-				'mp4_url'            => '',
-				'thumbnail_url'      => '',
-				'attachment_width'   => 320,
-				'attachment_height'  => 200,
-				'permalink'          => Son_of_GIFV_Attachment::gifv_url( $attachment_id ),
-				// Bug in get_the_excerpt() https://core.trac.wordpress.org/ticket/36934, so we'll just grab the post field for now.
-				'caption'            => get_post_field( $attachment_id, 'post_excerpt'),
-				'domain'             => str_replace( 'http://', '', str_replace( 'https://', '', get_site_url() ) ),
+			$attachment = get_post( $attachment_id );
+			if ( ! empty( $attachment ) ) {
+
+				$data = array(
+					'id'                 => $attachment_id,
+					'mp4_id'             => get_post_meta( $attachment_id, 'son_of_gifv_mp4_id', true ),
+					'thumbnail_id'       => get_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', true ),
+					'mp4_url'            => '',
+					'thumbnail_url'      => '',
+					'attachment_width'   => 320,
+					'attachment_height'  => 200,
+					'permalink'          => Son_of_GIFV_Attachment::gifv_url( $attachment_id ),
+					// Bug in get_the_excerpt() https://core.trac.wordpress.org/ticket/36934, so we'll just grab the post field for now.
+					'caption'            => $attachment->post_excerpt,
+					'domain'             => str_replace( 'http://', '', str_replace( 'https://', '', get_site_url() ) ),
 				);
 
-			if ( ! empty( $data['mp4_id'] ) ) {
-				$data['mp4_url'] = wp_get_attachment_url( $data['mp4_id'] );
-			}
+				if ( ! empty( $data['mp4_id'] ) ) {
+					$data['mp4_url'] = wp_get_attachment_url( $data['mp4_id'] );
+				}
 
-			if ( ! empty( $data['thumbnail_id'] ) ) {
-				$data['thumbnail_url'] = wp_get_attachment_url( $data['thumbnail_id'] );
-			}
+				if ( ! empty( $data['thumbnail_id'] ) ) {
+					$data['thumbnail_url'] = wp_get_attachment_url( $data['thumbnail_id'] );
+				}
 
-			$metadata = wp_get_attachment_metadata( $attachment_id );
-			if ( ! empty( $metadata ) ) {
-				$data['attachment_width']  = $metadata['width'];
-				$data['attachment_height'] = $metadata['height'];
-			}
+				$metadata = wp_get_attachment_metadata( $attachment_id );
+				if ( ! empty( $metadata ) ) {
+					$data['attachment_width']  = $metadata['width'];
+					$data['attachment_height'] = $metadata['height'];
+				}
 
-			return apply_filters( 'son-of-gifv-template-data', $data, $attachment_id );
+				return apply_filters( 'son-of-gifv-template-data', $data, $attachment_id );
+			} else {
+				return false;
+			}
 
 		}
 

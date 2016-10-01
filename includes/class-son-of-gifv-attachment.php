@@ -44,7 +44,7 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 		}
 
 		/**
-		 * Returns true if the attacment ID as a corresponding MP4 and
+		 * Returns true if the attachment ID as a corresponding MP4 and
 		 * thumbnail attachment.
 		 *
 		 * @param  int  $attachment_id The attachment ID.
@@ -177,8 +177,22 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 
 		static public function gifv_url( $attachment_id ) {
 			if ( self::has_gifv( $attachment_id ) ) {
+
+				// Get the attachment.
 				$attachment = get_post( $attachment_id );
-				return site_url( $attachment->post_name . '.gifv' );
+
+				// Build the slugs for the URL.
+				$slugs = array( sanitize_key( $attachment->post_name ) );
+
+				// If there is a parent, add the parent slug to the URL.
+				if ( ! empty( $attachment->post_parent ) ) {
+					$post_parent = get_post( $attachment->post_parent );
+					if ( ! empty( $post_parent ) && ! empty( $post_parent->post_name ) ) {
+						$slugs[] = sanitize_key( $post_parent->post_name );
+					}
+				}
+
+				return site_url( join( array_reverse( $slugs ), '/' ) . '.gifv' );
 			}
 		}
 
