@@ -31,7 +31,7 @@
 
 		<?php do_action( 'son-of-gifv-template-body', $gifv_data ); ?>
 
-		<video width="<?php echo esc_attr( $gifv_data['attachment_width'] ); ?>" height="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" autoplay="autoplay" loop="loop">
+		<video poster="<?php echo esc_url( $gifv_data['thumbnail_url']  ); ?>" width="<?php echo esc_attr( $gifv_data['attachment_width'] ); ?>" height="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" preload="auto" autoplay="autoplay" muted="muted" loop="loop" webkit-playsinline>
 			<source src="<?php echo esc_url( $gifv_data['mp4_url'] ); ?>" type="video/mp4">
 		</video>
 
