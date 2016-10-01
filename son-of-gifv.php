@@ -1,12 +1,13 @@
 <?php
 /**
- * Plugin Name: Son of GIFV
- * Description: GIF to GIFV converter
- * Version:     1.0.0
- * Author:      Pete Nelson pete@petenelson.com
- * Author URI:  https://petenelson.io
- *
- */
+Plugin Name: Son of GIFV
+Description: GIF to GIFV converter
+Version:     1.0.0
+Author:      Pete Nelson <a href="https://twitter.com/GunGeekATX">(@GunGeekATX)</a>
+Author URI:  https://petenelson.io
+Text Domain: son-of-gifv
+Domain Path: /languages
+*/
 
 
 if ( ! defined( 'ABSPATH' ) ) {
