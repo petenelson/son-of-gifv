@@ -3,12 +3,9 @@
 	var Son_of_GIFV = {
 
 		init: function() {
-			var fields = $( '.son-of-gifv-form-fields' );
-			if ( fields.length === 0 ) {
-				return;
+			if ( 'undefined' !== typeof( _ ) ) {
+				$( 'body' ).on( 'click', '.son-of-gifv-convert', _.bind( this.convertToGIFV, this ) );
 			}
-
-			fields.on( 'click', '.son-of-gifv-convert', _.bind( this.convertToGIFV, this ) );
 		},
 
 		convertToGIFV: function( e ) {

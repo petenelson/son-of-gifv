@@ -146,7 +146,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			if ( ! empty( $results['imgur_response']->data ) && ! empty( $results['imgur_response']->data->mp4 ) ) {
 
 				// Make the local temp .mp4 filename match the .gif filename.
-				$local_mp4_filename = basename( $results['filename'], '.gif' ) . '.mp4';
+				$local_mp4_filename = sanitize_key( basename( $results['filename'], '.gif' ) ) . '.mp4';
 
 				// Download the URL locally.
 				$local_mp4 = Son_of_GIFV_Attachment::download_file( $results['imgur_response']->data->mp4, $local_mp4_filename );
@@ -191,7 +191,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 				$thumbnail_url = apply_filters( 'son-of-gifv-imgur-thumbnail-url', "https://i.imgur.com/{$id}h.jpg", $results['imgur_response'] );
 
 				// Download the thumbnail locally.
-				$local_thumbnail = Son_of_GIFV_Attachment::download_file( $thumbnail_url, basename( $results['filename'] ) . '.jpg' );
+				$local_thumbnail = Son_of_GIFV_Attachment::download_file( $thumbnail_url, sanitize_key( basename( $results['filename'], '.gif' ) ) . '.jpg' );
 
 				if ( ! is_wp_error( $local_thumbnail ) ) {
 
