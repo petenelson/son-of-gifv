@@ -18,7 +18,7 @@ if ( ! class_exists( 'Son_of_GIFV_REST_API' ) ) {
 					'methods'  => array( 'GET', 'POST' ),
 					'args'     => array(
 						'attachment_id' => array(
-							'required' => true,
+							'required' => false,
 							)
 						),
 
@@ -28,14 +28,13 @@ if ( ! class_exists( 'Son_of_GIFV_REST_API' ) ) {
 
 		static public function convert_gif_to_gifv( $request ) {
 
+
 			$results = Son_of_GIFV_Converter::gif_to_gifv( $request['attachment_id'] );
 
 			// Add form field template.
 			if ( empty( $results['error'] ) ) {
-
 				$template = apply_filters( 'son-of-gifv-template-has-gifv', SON_OF_GIFV_PATH . 'templates/admin/has-gifv-form-fields.php' );
-				$results['html'] = Son_of_GIFV_Attachment::get_gifv_form_fields( $template, get_post( $request['attachment_id'] ) );
-
+				$results['html'] = Son_of_GIFV_Attachment::get_gifv_form_fields( $template, get_post( $results['attachment_id'] ) );
 			}
 
 			return rest_ensure_response( $results );

@@ -33,7 +33,7 @@ if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 			if ( ! is_wp_error( $response ) ) {
 				return json_decode( wp_remote_retrieve_body( $response ) );
 			} else {
-				return false;
+				return $response;
 			}
 
 		}

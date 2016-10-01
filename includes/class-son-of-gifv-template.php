@@ -40,7 +40,8 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 				'attachment_width'   => 320,
 				'attachment_height'  => 200,
 				'permalink'          => Son_of_GIFV_Attachment::gifv_url( $attachment_id ),
-				'caption'            => get_the_excerpt( $attachment_id ),
+				// Bug in get_the_excerpt() https://core.trac.wordpress.org/ticket/36934, so we'll just grab the post field for now.
+				'caption'            => get_post_field( $attachment_id, 'post_excerpt'),
 				'domain'             => str_replace( 'http://', '', str_replace( 'https://', '', get_site_url() ) ),
 				);
 
