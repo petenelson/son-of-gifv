@@ -31,9 +31,7 @@
 
 		<?php do_action( 'son-of-gifv-template-body', $gifv_data ); ?>
 
-		<!-- <?php var_dump( $gifv_data ); ?> -->
-
-		<video width="<?php echo esc_attr( $gifv_data['attachment_width'] ); ?>" height="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" autoplay loop>
+		<video width="<?php echo esc_attr( $gifv_data['attachment_width'] ); ?>" height="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" autoplay="autoplay" loop="loop">
 			<source src="<?php echo esc_url( $gifv_data['mp4_url'] ); ?>" type="video/mp4">
 		</video>
 
