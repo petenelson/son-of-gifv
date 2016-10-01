@@ -17,6 +17,16 @@ if ( ! class_exists( 'Son_of_GIFV_Common' ) ) {
 
 		static public function enqueue_admin_scripts() {
 			wp_enqueue_script( 'son-of-gifv-admin' );
+
+			$data = array(
+				'rest_api_url'  => array(
+					'convert' => rest_url( 'son-of-gifv-admin/v1/convert' ),
+					)
+				);
+
+			wp_localize_script( 'son-of-gifv-admin', 'Son_of_GIFV_Admin', $data );
+
+
 		}
 
 	}

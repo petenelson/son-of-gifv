@@ -60,6 +60,10 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			// Does it already have files for a GIFV?
 			if ( Son_of_GIFV_Attachment::has_gifv( $attachment_id ) ) {
 				$results['error'] = sprintf( __( 'Attachment ID %d already has a GIFV', 'son-of-gifv' ), $attachment_id );
+
+				// Stick the GIFV URL in the results since it already has one.
+				$results['gifv_url'] = Son_of_GIFV_Attachment::gifv_url( $attachment_id );
+
 				return $results;
 			}
 

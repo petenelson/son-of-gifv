@@ -6,6 +6,8 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 
 		static public function setup() {
 			add_action( 'pre_get_posts', 'Son_of_GIFV_Attachment::update_main_query' );
+
+			add_filter( 'attachment_fields_to_edit', 'Son_of_GIFV_Attachment::attachment_fields_to_edit', 10, 2 );
 		}
 
 		static public function update_main_query( $query ) {
@@ -169,6 +171,26 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 				$attachment = get_post( $attachment_id );
 				return site_url( $attachment->post_name . '.gifv' );
 			}
+		}
+
+		static public function attachment_fields_to_edit( $form_fields, $post ) {
+			// TODO make the chimichangas.
+
+			// sample code to update later
+			// ob_start();
+			// output_posts_related_to( $posts, $users );
+			// $related_to_html = ob_get_clean();
+
+			// $form_fields['related_to_posts'] = array(
+			// 	'label' => __( 'Related To', 'son-of-gifv' ),
+			// 	'input' => 'html',
+			// 	'html'  => $related_to_html,
+			// 	);
+
+			// return $form_fields;
+
+
+			return $form_fields;
 		}
 
 
