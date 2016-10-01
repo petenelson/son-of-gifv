@@ -16,7 +16,7 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 		 */
 		static public function gifv_template( $template ) {
 
-			if ( is_main_query() && '1' === get_query_var( '_son_of_gifv' ) ) {
+			if ( is_main_query() && '1' === get_query_var( '_son_of_gifv' ) && ! is_404() ) {
 				$template = apply_filters( 'son-of-gifv-template-gifv', SON_OF_GIFV_PATH . 'templates/gifv.php' );
 			}
 
