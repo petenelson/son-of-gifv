@@ -8,9 +8,6 @@ if ( ! class_exists( 'Son_of_GIFV_Common' ) ) {
 
 		static public function setup() {
 
-			// TODO add actions and filters
-			// load text domain
-
 		}
 
 	}

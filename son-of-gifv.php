@@ -21,6 +21,10 @@ if ( ! defined( 'SON_OF_GIFV_PATH' ) ) {
 	define( 'SON_OF_GIFV_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 }
 
+if ( ! defined( 'SON_OF_GIFV_URL_ROOT' ) ) {
+	define( 'SON_OF_GIFV_URL_ROOT', trailingslashit( plugins_url( '/', __FILE__ ) ) );
+}
+
 // Load plugin files.
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-common.php';
 require_once SON_OF_GIFV_ROOT . 'includes\class-son-of-gifv-permalinks.php';
