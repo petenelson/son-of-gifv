@@ -8,6 +8,7 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 			add_action( 'admin_init',                 'Son_of_GIFV_Admin::register_admin_scripts' );
 			add_action( 'admin_init',                 'Son_of_GIFV_Admin::plugin_upgrade' );
 			add_action( 'admin_enqueue_scripts',      'Son_of_GIFV_Admin::enqueue_admin_scripts' );
+			add_filter( 'media_row_actions',          'Son_of_GIFV_Admin::add_media_row_actions', 10, 2 );
 		}
 
 		/**
@@ -68,6 +69,24 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 				// Update the version number in the database
 				update_option( 'son-of-gifv-version', Son_of_GIFV_Common::VERSION );
 			}
+		}
+
+		/**
+		 * Adds 'View GIFV' link to media row actions.
+		 *
+		 * @param array   $actions The list of row actions.
+		 * @param WP_Post $post    The post object.
+		 * @return array
+		 */
+		static public function add_media_row_actions( $actions, $post ) {
+
+			if ( Son_of_GIFV_Attachment::has_gifv( $post->ID ) ) {
+				$actions['son_of_gifv_viiew'] = sprintf( '<a href="%s" target="_blank">%s</a>',
+					esc_url( Son_of_GIFV_Attachment::gifv_url( $post->ID ) ),
+					esc_html__( 'View GIFV', 'son-of-gifv ')
+				);
+			}
+			return $actions;
 		}
 
 	}
