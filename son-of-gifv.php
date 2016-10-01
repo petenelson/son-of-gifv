@@ -45,4 +45,4 @@ Son_of_GIFV_Permalinks::setup();
 Son_of_GIFV_Template::setup();
 Son_of_GIFV_Attachment::setup();
 Son_of_GIFV_REST_API::setup();
-Son_of_GIFV_Converter::setup();
+

@@ -4,10 +4,6 @@ if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 
 	class Son_of_GIFV_Imgur {
 
-		static public function valid_file_size( $filename ) {
-			// TODO
-		}
-
 		static public function upload( $filename ) {
 
 			if ( ! file_exists( $filename ) ) {
@@ -31,6 +27,7 @@ if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 			);
 
 			if ( ! is_wp_error( $response ) ) {
+				do_action( 'son-of-gifv-imgur-file-uploaded', $filename, $response );
 				return json_decode( wp_remote_retrieve_body( $response ) );
 			} else {
 				return $response;

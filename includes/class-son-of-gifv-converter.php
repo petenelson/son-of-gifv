@@ -4,19 +4,13 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 
 	class Son_of_GIFV_Converter {
 
-		static public function setup() {
-
-			// TODO add actions and filters
-
-		}
-
 		/**
 		 * Returns the default results for the conversion process.
 		 *
 		 * @return array
 		 */
 		static public function get_default_results() {
-			return array(
+			return apply_filters( 'son-of-gifv-default-results' array(
 				'attachment_id'            => 0,
 				'is_gif'                   => false,
 				'is_animated_gif'          => false,
@@ -28,7 +22,7 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 				'gifv_url'                 => '',
 				'error'                    => '',
 				'wp_error'                 => false,
-			);
+			) );
 		}
 
 		/**

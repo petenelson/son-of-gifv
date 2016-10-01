@@ -5,15 +5,23 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 	class Son_of_GIFV_Attachment {
 
 		static public function setup() {
-			add_action( 'pre_get_posts', 'Son_of_GIFV_Attachment::update_main_query' );
-
-			add_filter( 'attachment_fields_to_edit', 'Son_of_GIFV_Attachment::attachment_fields_to_edit', 10, 2 );
+			add_action( 'pre_get_posts',               'Son_of_GIFV_Attachment::update_main_query' );
+			add_filter( 'attachment_fields_to_edit',   'Son_of_GIFV_Attachment::attachment_fields_to_edit', 10, 2 );
 		}
 
+		/**
+		 * Update the main query if the request is for a GIFV file.
+		 *
+		 * @param  WP_Query $query The query object
+		 * @return void
+		 */
 		static public function update_main_query( $query ) {
 			if ( $query->is_main_query() && '1' === $query->get( '_son_of_gifv' ) ) {
+
+				// Get the GIFV post name.
 				$attachment_name = $query->get( 'son_of_gifv_name' );
 
+				// Setup args for the query.
 				$args = array(
 					'posts_per_page'   => 1,
 					'post_type'        => 'attachment',
@@ -36,10 +44,9 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 						),
 					);
 
-
+				// Alter the main query.
 				$query->parse_query( $args );
 				$query->set( '_son_of_gifv', '1' );
-
 			}
 		}
 
@@ -55,47 +62,57 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 			$thumbnail_id  = get_post_meta( $attachment_id, 'son_of_gifv_thumbnail_id', true );
 			if ( ! empty( $mp4_id ) && ! empty( $thumbnail_id ) ) {
 
-				return
-					'video/mp4'  === get_post_field( 'post_mime_type', $mp4_id ) &&
-					'image/jpeg' === get_post_field( 'post_mime_type', $thumbnail_id);
+				$has_gifv = 'video/mp4'  === get_post_field( 'post_mime_type', $mp4_id ) &&
+							'image/jpeg' === get_post_field( 'post_mime_type', $thumbnail_id);
+
+				return apply_filters( 'son-of-gifv-has-gifv', $has_gifv, $attachment_id );
 
 			}
 		}
 
+		/**
+		 * Determines if the attachment ID is a GIF.
+		 *
+		 * @param  int  $attachment_id The attachment ID.
+		 * @return boolean
+		 */
 		static public function is_gif( $attachment_id ) {
-			return 'image/gif' === get_post_mime_type( $attachment_id );
+			return apply_filters( 'son-of-gifv-is-gif', 'image/gif' === get_post_mime_type( $attachment_id ), $attachment_id );
 		}
 
 		static public function is_animated_gif( $attachment_id ) {
 
 			if ( ! self::is_gif( $attachment_id ) ) {
-				return false;
+				return apply_filters( 'son-of-gifv-is-animated-gif', false, $attachment_id );
 			}
 
 			$filename = get_attached_file( $attachment_id );
 
 			// From https://stackoverflow.com/questions/280658/can-i-detect-animated-gifs-using-php-and-gd
 
+			$is_animated_gif = false;
+
 			// Open the file.
 			$fh = @fopen( $filename, 'rb' );
-			if( ! $fh ) {
-				return false;
-			}
-			$count = 0;
-			//an animated gif contains multiple "frames", with each frame having a
-			//header made up of:
-			// * a static 4-byte sequence (\x00\x21\xF9\x04)
-			// * 4 variable bytes
-			// * a static 2-byte sequence (\x00\x2C)
+			if ( $fh ) {
+				$count = 0;
+				//an animated gif contains multiple "frames", with each frame having a
+				//header made up of:
+				// * a static 4-byte sequence (\x00\x21\xF9\x04)
+				// * 4 variable bytes
+				// * a static 2-byte sequence (\x00\x2C)
 
-			// We read through the file til we reach the end of the file, or we've found
-			// at least 2 frame headers
-			while( !feof( $fh ) && $count < 2 ) {
-				$chunk = fread( $fh, 1024 * 100 ); //read 100kb at a time
-				$count += preg_match_all( '#\x00\x21\xF9\x04.{4}\x00[\x2C\x21]#s', $chunk, $matches );
+				// We read through the file til we reach the end of the file, or we've found
+				// at least 2 frame headers
+				while( !feof( $fh ) && $count < 2 ) {
+					$chunk = fread( $fh, 1024 * 100 ); //read 100kb at a time
+					$count += preg_match_all( '#\x00\x21\xF9\x04.{4}\x00[\x2C\x21]#s', $chunk, $matches );
+				}
+				fclose( $fh );
+				$is_animated_gif = $count > 1;
 			}
-			fclose( $fh );
-			return $count > 1;
+
+			return apply_filters( 'son-of-gifv-is-animated-gif', $is_animated_gif, $attachment_id );
 		}
 
 		/**
@@ -123,6 +140,7 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 			$results = media_handle_sideload( $file_array, 0, $attachment_description );
 
 			if ( ! is_wp_error( $results ) ) {
+				do_action( 'son-of-gifv-file-sideloaded', $file_array, $attachment_description );
 				return $results;
 			} else {
 				return false;
@@ -142,11 +160,16 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 			$response = wp_remote_get( $url, array( 'timeout' => 15 ) );
 
 			if ( ! is_wp_error( $response ) ) {
+
+				do_action( 'son-of-gifv-file-downloaded', $url, $local_filename, $response );
+
 				// Get the file contents.
 				$contents  = wp_remote_retrieve_body( $response );
 
 				// Save the contents to a file.
 				$temp_file = self::binary_data_to_file( $contents, trailingslashit( wp_upload_dir()['basedir'] ), $local_filename );
+
+				do_action( 'son-of-gifv-temp-file-created', $temp_file );
 
 				return $temp_file;
 			} else {
@@ -192,7 +215,7 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 					}
 				}
 
-				return site_url( join( array_reverse( $slugs ), '/' ) . '.gifv' );
+				return apply_filters( 'son-of-gifv-permalink', site_url( join( array_reverse( $slugs ), '/' ) . '.gifv' ) );
 			}
 		}
 
@@ -227,7 +250,6 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 			return $form_fields;
 		}
 
-
 		static public function get_gifv_form_fields( $template, $post ) {
 
 			$html       = '';
@@ -239,7 +261,7 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 				$html = ob_get_clean();
 			}
 
-			return $html;
+			return apply_filters( 'son-of-gifv-form-fields', $html, $template, $post );
 		}
 
 
