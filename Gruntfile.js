@@ -7,7 +7,8 @@ module.exports = function( grunt ) {
 			target: {
 				options: {
 					type:        'wp-plugin',
-					mainFile:    'son-of-gifv.php'
+					mainFile:    'son-of-gifv.php',
+					potFilename: 'languages/son-of-gifv.pot'
 				}
 			}
 		},
@@ -82,8 +83,9 @@ module.exports = function( grunt ) {
 				files: [
 
 					// directories
-					{ expand: true, src: ['admin/**'], dest: 'release/son-of-gifv' },
+					{ expand: true, src: ['assets/**'], dest: 'release/son-of-gifv' },
 					{ expand: true, src: ['includes/**'], dest: 'release/son-of-gifv' },
+					{ expand: true, src: ['templates/**'], dest: 'release/son-of-gifv' },
 					{ expand: true, src: ['languages/*.pot'], dest: 'release/son-of-gifv' },
 					{ expand: true, src: ['languages/*.mo'], dest: 'release/son-of-gifv' },
 
