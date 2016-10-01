@@ -114,6 +114,12 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 				'tmp_name' => $local_filename,
 				);
 
+			if (  ! function_exists( 'media_handle_sideload' ) ) {
+				require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
+				require_once( ABSPATH . "wp-admin" . '/includes/file.php' );
+				require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
+			}
+
 			$results = media_handle_sideload( $file_array, 0, $attachment_description );
 
 			if ( ! is_wp_error( $results ) ) {
@@ -180,13 +186,15 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 			if ( self::has_gifv( $post->ID ) ) {
 
 				// Get the GIFV fields if it has one.
-				$html = self::get_has_gifv_form_fields( $post );
+				$template = apply_filters( 'son-of-gifv-template-has-gifv', SON_OF_GIFV_PATH . 'templates/admin/has-gifv-form-fields.php' );
+				$html     = self::get_gifv_form_fields( $template, $post );
 	
 
 			} else if ( self::is_animated_gif( $post->ID ) ) {
 
 				// Get the fiels to convert to GIFV.
-				$html = self::get_convert_to_gifv_form_fields( $post );
+				$template = apply_filters( 'son-of-gifv-template-convert-to-gifv', SON_OF_GIFV_PATH . 'templates/admin/convert-to-gifv-form-fields.php' );
+				$html = self::get_gifv_form_fields( $template, $post );
 
 			}
 
@@ -204,12 +212,18 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 		}
 
 
-		static public function get_has_gifv_form_fields( $post ) {
+		static public function get_gifv_form_fields( $template, $post ) {
 
-			// $template = apply_filters( 'son-of-gifv-template-has-gifv-form-fields-t', $value ); include SON_OF_GIFV_PATH . 'templates/admin/has-gifv-form-fields.php';
+			$html       = '';
+			$gifv_data  = Son_of_GIFV_Template::get_template_data( $post->ID );
 
+			if ( file_exists( $template ) ) {
+				ob_start();
+				include $template;
+				$html = ob_get_clean();
+			}
 
-
+			return $html;
 		}
 
 

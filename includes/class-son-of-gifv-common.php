@@ -12,7 +12,13 @@ if ( ! class_exists( 'Son_of_GIFV_Common' ) ) {
 		}
 
 		static public function register_admin_scripts() {
-			wp_register_script( 'son-of-gifv-admin', SON_OF_GIFV_URL_ROOT . 'assets/js/admin/son-of-gifv.js' );
+			wp_register_script(
+				'son-of-gifv-admin',
+				SON_OF_GIFV_URL_ROOT . 'assets/js/admin/son-of-gifv.js',
+				array( 'jquery' ),
+				Son_of_GIFV_Common::VERSION,
+				true
+			);
 		}
 
 		static public function enqueue_admin_scripts() {
@@ -20,7 +26,7 @@ if ( ! class_exists( 'Son_of_GIFV_Common' ) ) {
 
 			$data = array(
 				'rest_api_url'  => array(
-					'convert' => rest_url( 'son-of-gifv-admin/v1/convert' ),
+					'convert' => rest_url( 'son-of-gifv/v1/convert' ),
 					)
 				);
 

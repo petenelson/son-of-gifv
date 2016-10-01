@@ -17,8 +17,9 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 		static public function gifv_template( $template ) {
 
 			if ( is_main_query() && '1' === get_query_var( '_son_of_gifv' ) ) {
-				$template = SON_OF_GIFV_PATH . 'templates/gifv.php';
+				$template = apply_filters( 'son-of-gifv-template-gifv', SON_OF_GIFV_PATH . 'templates/gifv.php' );
 			}
+
 			return $template;
 		}
 
@@ -57,16 +58,16 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 				$data['attachment_height'] = $metadata['height'];
 			}
 
-			return $data;
+			return apply_filters( 'son-of-gifv-template-data', $data, $attachment_id );
 
 		}
 
 		static public function get_head_templates() {
 
 			$templates = array(
-				'general'  => SON_OF_GIFV_PATH . 'templates/meta-template-general.php',
-				'facebook' => SON_OF_GIFV_PATH . 'templates/meta-template-facebook.php',
-				'twitter'  => SON_OF_GIFV_PATH . 'templates/meta-template-twitter.php',
+				'general'     => SON_OF_GIFV_PATH . 'templates/meta-template-general.php',
+				'opengraph'   => SON_OF_GIFV_PATH . 'templates/meta-template-opengraph.php',
+				'twitter'     => SON_OF_GIFV_PATH . 'templates/meta-template-twitter.php',
 				);
 
 			return apply_filters( 'son-of-gifv-templates-head', $templates );
