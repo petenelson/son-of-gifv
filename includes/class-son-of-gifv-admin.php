@@ -33,18 +33,25 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 		 */
 		static public function enqueue_admin_scripts() {
 
-			wp_enqueue_script( 'son-of-gifv-admin' );
+			if ( ! function_exists( 'get_current_screen' ) ) {
+				return;
+			}
 
-			// Localized data for the admin script.
-			$data = array(
-				'rest_api_nonce' => wp_create_nonce( 'wp_rest' ),
-				'rest_api_url'   => array(
-					'convert' => rest_url( 'son-of-gifv/v1/convert' ),
-					)
-				);
+			// Only enqueue the script where we need it.
+			$screen = get_current_screen();
+			if ( ! empty( $screen ) && ( 'upload' === $screen->base || 'attachment' === $screen->post_type ) ) {
+				wp_enqueue_script( 'son-of-gifv-admin' );
 
-			wp_localize_script( 'son-of-gifv-admin', 'Son_of_GIFV_Admin', $data );
+				// Localized data for the admin script.
+				$data = array(
+					'rest_api_nonce' => wp_create_nonce( 'wp_rest' ),
+					'rest_api_url'   => array(
+						'convert' => rest_url( 'son-of-gifv/v1/convert' ),
+						)
+					);
 
+				wp_localize_script( 'son-of-gifv-admin', 'Son_of_GIFV_Admin', $data );
+			}
 		}
 
 		/**
