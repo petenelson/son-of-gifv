@@ -61,6 +61,17 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 
 		}
 
+		static public function get_head_templates() {
+
+			$templates = array(
+				'general'  => SON_OF_GIFV_PATH . 'templates/meta-template-general.php',
+				'facebook' => SON_OF_GIFV_PATH . 'templates/meta-template-facebook.php',
+				'twitter'  => SON_OF_GIFV_PATH . 'templates/meta-template-twitter.php',
+				);
+
+			return apply_filters( 'son-of-gifv-templates-head', $templates );
+		}
+
 	}
 
 }

@@ -174,23 +174,42 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 		}
 
 		static public function attachment_fields_to_edit( $form_fields, $post ) {
-			// TODO make the chimichangas.
 
-			// sample code to update later
-			// ob_start();
-			// output_posts_related_to( $posts, $users );
-			// $related_to_html = ob_get_clean();
+			$html = '';
 
-			// $form_fields['related_to_posts'] = array(
-			// 	'label' => __( 'Related To', 'son-of-gifv' ),
-			// 	'input' => 'html',
-			// 	'html'  => $related_to_html,
-			// 	);
+			if ( self::has_gifv( $post->ID ) ) {
 
-			// return $form_fields;
+				// Get the GIFV fields if it has one.
+				$html = self::get_has_gifv_form_fields( $post );
+	
 
+			} else if ( self::is_animated_gif( $post->ID ) ) {
+
+				// Get the fiels to convert to GIFV.
+				$html = self::get_convert_to_gifv_form_fields( $post );
+
+			}
+
+			// Add the fields to the media form.
+			if ( ! empty( $html ) ) {
+
+				$form_fields['son_of_gifv'] = array(
+					'label' => __( 'GIFV', 'son-of-gifv' ),
+					'input' => 'html',
+					'html'  => $html,
+					);
+			}
 
 			return $form_fields;
+		}
+
+
+		static public function get_has_gifv_form_fields( $post ) {
+
+			// $template = apply_filters( 'son-of-gifv-template-has-gifv-form-fields-t', $value ); include SON_OF_GIFV_PATH . 'templates/admin/has-gifv-form-fields.php';
+
+
+
 		}
 
 
