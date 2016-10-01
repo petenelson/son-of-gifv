@@ -9,7 +9,7 @@
 		},
 
 		convertToGIFV: function( e ) {
-			e.preventDefault;
+			e.preventDefault();
 
 			// Turn on the spinner and hide this link.
 			var link = $( e.target );

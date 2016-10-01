@@ -160,6 +160,9 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 					// Store the MP4 attachment ID.
 					if ( ! empty( $mp4_id ) ) {
 						$results['mp4_attachment_id'] = $mp4_id;
+
+						// Attach this to the parent GIF
+						wp_update_post( array( 'ID' => $results['mp4_attachment_id'], 'post_parent' => $results['attachment_id'] ) );
 					} else {
 						$results['error'] = sprintf( __( 'Unable to sideload %s', 'son-of-gifv' ), $local_mp4 );
 					}
@@ -202,6 +205,9 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 					// Store the thumbnail attachment ID.
 					if ( ! empty( $thumbnail_id ) ) {
 						$results['thumbnail_attachment_id'] = $thumbnail_id;
+
+						// Attach this to the parent GIF
+						wp_update_post( array( 'ID' => $results['thumbnail_attachment_id'], 'post_parent' => $results['attachment_id'] ) );
 					} else {
 						$results['error'] = sprintf( __( 'Unable to sideload %s', 'son-of-gifv' ), $local_thumbnail );
 					}

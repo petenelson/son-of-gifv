@@ -203,7 +203,6 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 
 			// Add the fields to the media form.
 			if ( ! empty( $html ) ) {
-
 				$form_fields['son_of_gifv'] = array(
 					'label' => __( 'GIFV', 'son-of-gifv' ),
 					'input' => 'html',
