@@ -186,9 +186,9 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 
 				// If there is a parent, add the parent slug to the URL.
 				if ( ! empty( $attachment->post_parent ) ) {
-					$post_parent = get_post( $attachment->post_parent );
-					if ( ! empty( $post_parent ) && ! empty( $post_parent->post_name ) ) {
-						$slugs[] = sanitize_key( $post_parent->post_name );
+					$post_parent_slug = get_post_field( 'post_name', $attachment->post_parent );
+					if ( ! empty( $post_parent_slug ) ) {
+						$slugs[] = sanitize_key( $post_parent_slug );
 					}
 				}
 
