@@ -13,4 +13,4 @@
 <meta name="twitter:player:width"               content="<?php echo esc_attr( $gifv_data['attachment_width'] ); ?>" />
 <meta name="twitter:player:height"              content="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" />
 <meta name="twitter:player:stream"              content="<?php echo esc_attr( $gifv_data['mp4_url'] ); ?>" />
-<meta name="twitter:player:stream:content_type" content="video/mp4">
+<meta name="twitter:player:stream:content_type" content="video/mp4" />
