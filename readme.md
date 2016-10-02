@@ -59,17 +59,17 @@ Find us on [GitHub](https://github.com/petenelson/son-of-gifv)
 ## Screenshots ##
 
 ### 1. "Convert to GIFV" on a media admin screen ###
-!["Convert to GIFV" on a media admin screen](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/assets/screenshot-1.png)
+!["Convert to GIFV" on a media admin screen](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/wp-repo-assets/screenshot-1.png)
 
 ### 2. "View GIFV" link for a GIF that has been converted ###
-!["View GIFV" link for a GIF that has been converted](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/assets/screenshot-2.png)
+!["View GIFV" link for a GIF that has been converted](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/wp-repo-assets/screenshot-2.png)
 
 ### 3. "View GIFV" link when viewing a GIF in the media grid ###
-!["View GIFV" link when viewing a GIF in the media grid](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/assets/screenshot-3.png)
+!["View GIFV" link when viewing a GIF in the media grid](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/wp-repo-assets/screenshot-3.png)
 
 ### 4. Inline "View GIFV" link when viewing the media list ###
-![Inline "View GIFV" link when viewing the media list](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/assets/screenshot-4.png)
+![Inline "View GIFV" link when viewing the media list](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/wp-repo-assets/screenshot-4.png)
 
 ### 5. Example of the .gifv extension displaying the converted GIF ###
-![Example of the .gifv extension displaying the converted GIF](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/assets/screenshot-5.png)
+![Example of the .gifv extension displaying the converted GIF](https://raw.githubusercontent.com/petenelson/son-of-gifv/master/wp-repo-assets/screenshot-5.png)
 

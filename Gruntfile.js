@@ -35,7 +35,7 @@ module.exports = function( grunt ) {
 
 		wp_readme_to_markdown: {
 			options: {
-				screenshot_url: "https://raw.githubusercontent.com/petenelson/son-of-gifv/master/assets/{screenshot}.png",
+				screenshot_url: "https://raw.githubusercontent.com/petenelson/son-of-gifv/master/wp-repo-assets/{screenshot}.png",
 				},
 			your_target: {
 				files: {
