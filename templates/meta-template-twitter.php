@@ -1,7 +1,5 @@
 <?php
-// TODO
-// <meta name="twitter:site"                       content="@gungeekatx" />
-
+$twitter_handle = get_option( 'son-of-gifv-twitter-handle' );
 ?>
 <meta name="twitter:card"                       content="player" />
 <meta name="twitter:domain"                     content="<?php echo esc_attr( $gifv_data['domain'] ); ?>" />
@@ -14,3 +12,6 @@
 <meta name="twitter:player:height"              content="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" />
 <meta name="twitter:player:stream"              content="<?php echo esc_attr( $gifv_data['mp4_url'] ); ?>" />
 <meta name="twitter:player:stream:content_type" content="video/mp4" />
+<?php if ( ! empty( $twitter_handle ) ) : ?>
+<meta name="twitter:site"                       content="<?php echo esc_attr( '@' . $twitter_handle ); ?>" />
+<?php endif; ?>

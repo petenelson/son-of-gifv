@@ -11,3 +11,7 @@
 <meta property="og:video"        content="<?php echo esc_url(  $gifv_data['mp4_url'] ); ?>" />
 <meta property="og:video:width"  content="<?php echo esc_attr( $gifv_data['attachment_width'] ); ?>" />
 <meta property="og:video:height" content="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" />
+<?php if ( is_ssl() ) : ?>
+<meta property="og:image:secure_url" content="<?php echo esc_url(  $gifv_data['thumbnail_url'] ); ?>" />
+<meta property="og:video:secure_url" content="<?php echo esc_url(  $gifv_data['mp4_url'] ); ?>" />
+<?php endif; ?>

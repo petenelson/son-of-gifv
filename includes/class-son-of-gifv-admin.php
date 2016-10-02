@@ -9,6 +9,8 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 			add_action( 'admin_init',                 'Son_of_GIFV_Admin::plugin_upgrade' );
 			add_action( 'admin_enqueue_scripts',      'Son_of_GIFV_Admin::enqueue_admin_scripts' );
 			add_filter( 'media_row_actions',          'Son_of_GIFV_Admin::add_media_row_actions', 10, 2 );
+			add_action( 'admin_menu',                 'Son_of_GIFV_Admin::add_options_page' );
+			add_action( 'admin_init',                 'Son_of_GIFV_Admin::register_settings' );
 		}
 
 		/**
@@ -94,6 +96,57 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 				);
 			}
 			return $actions;
+		}
+
+		static public function add_options_page() {
+			add_options_page( __( 'Son of GIFV', 'son-of-gifv' ), __( 'Son of GIFV', 'son-of-gifv' ), 'manage_options', 'son-of-gifv', 'Son_of_GIFV_Admin::display_options_page' );
+
+
+		}
+
+		static public function register_settings() {
+			add_settings_section( 'son-of-gifv-social-media', __( 'Social Media', 'son-of-gifv' ), null, 'son-of-gifv' );
+
+			add_settings_field(
+				'son-of-gifv-twitter-handle',
+				__( 'Twitter ID', 'son-of-gifv' ),
+				'Son_of_GIFV_Admin::setting_twitter_handle',
+				'son-of-gifv',
+				'son-of-gifv-social-media'
+			);
+
+			register_setting( 'son-of-gifv-social-media', 'son-of-gifv-twitter-handle', 'sanitize_text_field' );
+
+		}
+
+		static public function display_options_page() {
+			?>
+
+			<div class="wrap">
+
+				<h1><?php esc_html_e( 'Son of GIFV Settings', 'son-of-gifv' ); ?></h1>
+
+				<form method="POST" action="options.php">
+					<?php
+					settings_fields( 'son-of-gifv-social-media' );
+					do_settings_sections( 'son-of-gifv' );
+					submit_button();
+				?>
+				</form>
+			</div>
+
+			<?php
+
+		}
+
+		static public function setting_twitter_handle() {
+			$value = get_option( 'son-of-gifv-twitter-handle' );
+			?>
+				@<input type="text" class="regular-text" name="son-of-gifv-twitter-handle" id="son-of-gifv-twitter-handle" value="<?php echo esc_attr( $value ); ?>" />
+				<p class="description">
+					<?php esc_html_e( 'Your site or personal Twitter handle', 'son-of-gifv' ); ?>
+				</p>
+			<?php
 		}
 
 	}
