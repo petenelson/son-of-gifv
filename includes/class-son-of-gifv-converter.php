@@ -83,10 +83,12 @@ if ( ! class_exists( 'Son_of_GIFV_Converter' ) ) {
 			$imgur_response = Son_of_GIFV_Imgur::upload( $results['filename'] );
 
 			// Check if the upload worked.
-			if ( is_wp_error( $imgur_response ) ) {
+			if ( is_wp_error( $imgur_response ) || empty( $imgur_response ) ) {
 				$results['error']    = __( 'Unable to upload image to Imgur.', 'son-of-gifv' );
-				$results['error']   .= ' ' . $imgur_response->get_error_message();
-				$results['wp_error'] = $imgur_response;
+				if ( ! empty( $imgur_response ) ) {
+					$results['error']   .= ' ' . $imgur_response->get_error_message();
+					$results['wp_error'] = $imgur_response;
+				}
 				return $results;
 			} else {
 				$results['imgur_response'] = $imgur_response;
