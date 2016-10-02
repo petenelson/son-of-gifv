@@ -204,18 +204,19 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 				// Get the attachment.
 				$attachment = get_post( $attachment_id );
 
-				// Build the slugs for the URL.
-				$slugs = array( sanitize_key( $attachment->post_name ) );
+				// Build the end of the URL.
+				$filename   = sanitize_key( $attachment->post_name ) . '.gifv';
 
-				// If there is a parent, add the parent slug to the URL.
+
 				if ( ! empty( $attachment->post_parent ) ) {
-					$post_parent_slug = get_post_field( 'post_name', $attachment->post_parent );
-					if ( ! empty( $post_parent_slug ) ) {
-						$slugs[] = sanitize_key( $post_parent_slug );
-					}
+					// If there is a parent, use that as the start of the URL.
+					$gifv_url = trailingslashit( get_permalink( $attachment->post_parent ) ) . $filename;
+				} else {
+					// Just use the site URL for GIFV with no parent.
+					$gifv_url = site_url( $filename );
 				}
 
-				return apply_filters( 'son-of-gifv-permalink', site_url( join( array_reverse( $slugs ), '/' ) . '.gifv' ) );
+				return apply_filters( 'son-of-gifv-permalink', $gifv_url, $attachment_id );
 			}
 		}
 

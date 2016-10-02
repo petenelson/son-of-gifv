@@ -26,8 +26,8 @@ if ( ! class_exists( 'Son_of_GIFV_Permalinks' ) ) {
 		 * @return void
 		 */
 		static public function register_rewrite_rules() {
-			add_rewrite_rule( "^.+/([0-9a-z\-\_]+)\.gifv?", 'index.php?son_of_gifv_name=$matches[1]&_son_of_gifv=1', 'top' );
-			add_rewrite_rule( "([0-9a-z\-\_]+)\.gifv", 'index.php?son_of_gifv_name=$matches[1]&_son_of_gifv=1', 'top' );
+			add_rewrite_rule( "^.+\/([0-9a-z\_\-)]+)\.gifv?", 'index.php?son_of_gifv_name=$matches[1]&_son_of_gifv=1', 'top' );
+			add_rewrite_rule( "^([0-9a-z\-\_]+)\.gifv", 'index.php?son_of_gifv_name=$matches[1]&_son_of_gifv=1', 'top' );
 		}
 
 		/**
