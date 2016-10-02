@@ -15,7 +15,7 @@ if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 
 			// Setup the values for the remote post.
 			$url       = apply_filters( 'son-of-gifv-imgur-api-url', 'https://api.imgur.com/3/image' );
-			$client_id = apply_filters( 'son-of-gifv-imgur-client-id', 'd36e23f2ed35b96' );
+			$client_id = apply_filters( 'son-of-gifv-imgur-client-id', '99bd99ab0c1e85a' );
 
 			// POST the file to the Imgur API.
 			$response = wp_remote_post( $url,
