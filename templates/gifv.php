@@ -29,7 +29,6 @@ $stylesheet = apply_filters( 'son-of-gifv-stylesheet', SON_OF_GIFV_URL_ROOT . 'a
 
 			do_action( 'son-of-gifv-template-head', $gifv_data );
 		?>
-
 	</head>
 	<body class="son-of-gifv-body">
 		<?php do_action( 'son-of-gifv-template-body', $gifv_data ); ?>
@@ -39,7 +38,6 @@ $stylesheet = apply_filters( 'son-of-gifv-stylesheet', SON_OF_GIFV_URL_ROOT . 'a
 				width: <?php echo absint( $gifv_data['attachment_width'] ) ?>px;
 				height: <?php echo absint( $gifv_data['attachment_height'] ) ?>px;
 			}
-
 		</style>
 
 		<video poster="<?php echo esc_url( $gifv_data['thumbnail_url']  ); ?>" width="<?php echo esc_attr( $gifv_data['attachment_width'] ); ?>" height="<?php echo esc_attr( $gifv_data['attachment_height'] ); ?>" preload="auto" autoplay="autoplay" muted="muted" loop="loop" webkit-playsinline>
