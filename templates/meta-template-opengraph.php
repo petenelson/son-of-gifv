@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 <meta property="og:type"         content="video/mp4" />
 <meta property="og:type"         content="video.other" />
 <meta property="og:video:type"   content="video/mp4" />

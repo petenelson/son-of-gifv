@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $twitter_handle = get_option( 'son-of-gifv-twitter-handle' );
 ?>
 <meta name="twitter:card"                       content="player" />

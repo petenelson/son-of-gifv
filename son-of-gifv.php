@@ -11,7 +11,7 @@ Domain Path: /languages
 
 
 if ( ! defined( 'ABSPATH' ) ) {
-	die( 'restricted access' );
+	exit;
 }
 
 if ( ! defined( 'SON_OF_GIFV_ROOT' ) ) {

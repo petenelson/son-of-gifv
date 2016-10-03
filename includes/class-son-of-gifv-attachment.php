@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 
 	class Son_of_GIFV_Attachment {
@@ -7,6 +11,8 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 		static public function setup() {
 			add_action( 'pre_get_posts',               'Son_of_GIFV_Attachment::update_main_query' );
 			add_filter( 'attachment_fields_to_edit',   'Son_of_GIFV_Attachment::attachment_fields_to_edit', 10, 2 );
+
+			add_filter( 'son-of-gifv-permalink',        'Son_of_GIFV_Attachment::permalink_filter', 10, 2 );
 		}
 
 		/**
@@ -216,8 +222,13 @@ if ( ! class_exists( 'Son_of_GIFV_Attachment' ) ) {
 					$gifv_url = site_url( $filename );
 				}
 
-				return apply_filters( 'son-of-gifv-permalink', $gifv_url, $attachment_id );
+				return apply_filters( 'son-of-gifv-url', $gifv_url, $attachment_id );
 			}
+		}
+
+		static public function permalink_filter( $url, $attachment_id ) {
+			$permalink = self::gifv_url( $attachment_id );
+			return ! empty( $permalink ) ? $permalink : $url;
 		}
 
 		static public function attachment_fields_to_edit( $form_fields, $post ) {

@@ -1,10 +1,14 @@
 <?php
 
-	// Get the GIFV information.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	$gifv_data  = Son_of_GIFV_Template::get_template_data( get_the_id() );
-	$templates  = Son_of_GIFV_Template::get_head_templates();
-	$stylesheet = apply_filters( 'son-of-gifv-stylesheet', SON_OF_GIFV_URL_ROOT . 'assets/css/son-of-gifv.css' );
+// Get the GIFV information.
+
+$gifv_data  = Son_of_GIFV_Template::get_template_data( get_the_id() );
+$templates  = Son_of_GIFV_Template::get_head_templates();
+$stylesheet = apply_filters( 'son-of-gifv-stylesheet', SON_OF_GIFV_URL_ROOT . 'assets/css/son-of-gifv.css' );
 
 ?>
 <html>

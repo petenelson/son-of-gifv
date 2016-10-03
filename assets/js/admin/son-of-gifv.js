@@ -1,5 +1,7 @@
 ( function ( $ ) {
 
+	'use strict';
+
 	var Son_of_GIFV = {
 
 		init: function() {

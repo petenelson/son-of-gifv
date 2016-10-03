@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'Son_of_GIFV_REST_API' ) ) {
 
 	class Son_of_GIFV_REST_API {

@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 
 	class Son_of_GIFV_Imgur {
@@ -27,8 +31,21 @@ if ( ! class_exists( 'Son_of_GIFV_Imgur' ) ) {
 			);
 
 			if ( ! is_wp_error( $response ) ) {
-				do_action( 'son-of-gifv-imgur-file-uploaded', $filename, $response );
-				return json_decode( wp_remote_retrieve_body( $response ) );
+
+				// Some error responses don't come back as a WP_Error, so
+				// we'll handle this here.
+				$response_code    = wp_remote_retrieve_response_code( $response );
+				$response_message = wp_remote_retrieve_response_message( $response );
+
+				// Make sure we're getting a 200 response back.
+				if ( 200 === absint( $response_code ) ) {
+					do_action( 'son-of-gifv-imgur-file-uploaded', $filename, $response );
+					return json_decode( wp_remote_retrieve_body( $response ) );
+				} else {
+					// Send back a WP_Error.
+					return new WP_Error( '', $response_code . ' ' . $response_message );
+				}
+
 			} else {
 				return $response;
 			}
