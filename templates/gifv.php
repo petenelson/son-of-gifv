@@ -8,18 +8,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $gifv_data  = Son_of_GIFV_Template::get_template_data( get_the_id() );
 $templates  = Son_of_GIFV_Template::get_head_templates();
-$stylesheet = apply_filters( 'son-of-gifv-stylesheet', SON_OF_GIFV_URL_ROOT . 'assets/css/son-of-gifv.css' );
 
 ?>
 <html>
 	<head>
 		<title><?php the_title(); ?></title>
-
-		<?php if ( ! empty( $stylesheet ) ) : ?>
-			<link rel="stylesheet" type="text/css" href="<?php echo esc_url( $stylesheet ); ?>" />
-		<?php endif; ?>
-
 		<?php
+
+			// Output only our stylesheet. Because this is a specialized template,
+			// we only need our stylesheet and not the rest of the theme
+			// templates.
+			wp_print_styles( 'son-of-gifv');
+
 			// Output the head templates (ex: meta tags).
 			foreach( $templates as $name => $template ) {
 				if ( file_exists( $template ) ) {

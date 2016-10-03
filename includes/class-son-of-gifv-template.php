@@ -10,6 +10,7 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 
 		static public function setup() {
 			add_filter( 'template_include', 'Son_of_GIFV_Template::gifv_template' );
+			add_action( 'init',             'Son_of_GIFV_Template::register_template_styles' );
 		}
 
 		/**
@@ -92,6 +93,15 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 				);
 
 			return apply_filters( 'son-of-gifv-templates-head', $templates );
+		}
+
+		static public function register_template_styles() {
+			wp_register_style(
+				'son-of-gifv',
+				SON_OF_GIFV_URL_ROOT . 'assets/css/son-of-gifv.css',
+				array(),
+				Son_of_GIFV_Common::VERSION
+			);
 		}
 
 	}
