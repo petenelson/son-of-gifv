@@ -23,6 +23,23 @@ if ( ! class_exists( 'Son_of_GIFV_Template' ) ) {
 
 			if ( is_main_query() && '1' === get_query_var( '_son_of_gifv' ) && ! is_404() ) {
 				$template = apply_filters( 'son-of-gifv-template-gifv', SON_OF_GIFV_PATH . 'templates/gifv.php' );
+
+				// Load our inline styles for the template.
+				if ( is_singular() ) {
+
+					$gifv_data = self::get_template_data( get_the_id() );
+
+					// Add inline styles for our template.
+					if ( ! empty( $gifv_data ) ) {
+						$styles = ".son-of-gifv-body video {
+							width: " . absint( $gifv_data['attachment_width'] ) . "px;
+							height: " . absint( $gifv_data['attachment_height'] ) . "px;
+						}";
+
+						wp_add_inline_style( 'son-of-gifv', $styles );
+					}
+				}
+
 			}
 
 			return $template;
