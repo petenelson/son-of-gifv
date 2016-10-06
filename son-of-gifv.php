@@ -47,3 +47,12 @@ Son_of_GIFV_Permalinks::setup();
 Son_of_GIFV_Template::setup();
 Son_of_GIFV_Attachment::setup();
 Son_of_GIFV_REST_API::setup();
+
+/* Activation hook */
+register_activation_hook( __FILE__, function() {
+	// For our activation notice.
+	add_option( 'son-of-gifv-plugin-activated', '1', '', 'no' );
+
+	// For eventually showing a notice once the plugin has been in use for a while.
+	add_option( 'son-of-gifv-plugin-activated-at', current_time( 'timestamp' ), '', 'no' );
+} );

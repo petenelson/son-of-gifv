@@ -35,13 +35,13 @@ Find us on [GitHub](https://github.com/petenelson/son-of-gifv)
 
 == Changelog ==
 
-= v1.0.0 October 1, 2016 =
+= v1.0.0 October 5, 2016 =
 * Initial release
 
 
 == Upgrade Notice ==
 
-= v1.0.0 October 1, 2016 =
+= v1.0.0 October 5, 2016 =
 * Initial release
 
 

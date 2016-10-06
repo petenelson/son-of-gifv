@@ -15,6 +15,8 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 			add_filter( 'media_row_actions',          'Son_of_GIFV_Admin::add_media_row_actions', 10, 2 );
 			add_action( 'admin_menu',                 'Son_of_GIFV_Admin::add_options_page' );
 			add_action( 'admin_init',                 'Son_of_GIFV_Admin::register_settings' );
+
+			add_action( 'admin_notices',              'Son_of_GIFV_Admin::activation_notice' );
 		}
 
 		/**
@@ -157,6 +159,21 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 					<?php esc_html_e( 'Your site or personal Twitter handle', 'son-of-gifv' ); ?>
 				</p>
 			<?php
+		}
+
+		static public function activation_notice() {
+
+			if ( '1' === get_option( 'son-of-gifv-plugin-activated' ) ) {
+				?>
+					<div class="updated">
+						<p>
+							<?php echo wp_kses_post( sprintf( __( '<strong>Son of GIFV activated!</strong> Please <a href="%s">visit the Settings page</a> to customize the settings.', 'son-of-gifv' ), esc_url( admin_url( 'options-general.php?page=son-of-gifv' ) ) ) ); ?>
+						</p>
+					</div>
+				<?php
+				delete_option( 'son-of-gifv-plugin-activated' );
+			}
+
 		}
 
 	}
