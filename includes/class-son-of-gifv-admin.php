@@ -43,9 +43,15 @@ if ( ! class_exists( 'Son_of_GIFV_Admin' ) ) {
 				return;
 			}
 
+			$bases = array(
+				'upload',
+				'post',
+				);
+
 			// Only enqueue the script where we need it.
 			$screen = get_current_screen();
-			if ( ! empty( $screen ) && ( 'upload' === $screen->base || 'attachment' === $screen->post_type ) ) {
+
+			if ( ! empty( $screen ) && ( in_array( $screen->base, $bases ) || 'attachment' === $screen->post_type ) ) {
 				wp_enqueue_script( 'son-of-gifv-admin' );
 
 				// Localized data for the admin script.
