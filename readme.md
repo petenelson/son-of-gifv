@@ -3,7 +3,7 @@
 **Tags:** gif, gifv, animated gif, mp4  
 **Donate link:** https://petenelson.io/  
 **Requires at least:** 4.4  
-**Tested up to:** 4.6  
+**Tested up to:** 4.7  
 **Stable tag:** 1.0.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -20,7 +20,7 @@ into locally hosted GIFV URLs.
 * Adds "Convert to GIFV" to the Media Library
 * Creates URLs for converted GIFV files (ex: mysite.com/animated.gifv)
 * Twitter card and Facebook opengraph support for sharing
-* WP-CLI support via "gifv" 
+* WP-CLI support via "gifv"
 
 Plugin name inspired by [Son of Clippy](https://wordpress.org/plugins/son-of-clippy/)
 
